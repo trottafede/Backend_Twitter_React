@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const tweetSchema = new Schema(
   {
     text: { type: String, maxlength: 140 },
-    user: {
+    author: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
