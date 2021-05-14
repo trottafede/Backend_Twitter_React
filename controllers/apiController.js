@@ -4,26 +4,22 @@ const User = require("../models/User");
 const Tweet = require("../models/Tweet");
 
 const sendToken = async (req, res) => {
-  // console.log(req.body);
-  // let { user, password } = req.body;
   let user = req.body.username;
   let password = req.body.password;
 
-  console.log(user + " " + password);
   let userDB;
 
   userDB = await User.findOne({ userName: user });
-  console.log("usaste username");
 
   if (!userDB) {
     res.status(404).json({
-      error: "Usuario o contraseña incorrectos.",
+      error: "Usuario incorrecto",
     });
   }
 
   if (!(await bcrypt.compare(password, userDB.password))) {
     res.status(404).json({
-      error: "Usuario o contraseña incorrectos.",
+      error: "Contraseña incorrecta",
     });
   }
 
@@ -40,26 +36,16 @@ const sendToken = async (req, res) => {
 };
 
 const sendTweets = async (req, res) => {
-  // console.log("Logeado como: " + req.user);
-  // const user = req.user;
+  const user = req.user;
 
   const arrayDeTweets = await Tweet.find()
     .sort({ createdAt: -1 })
-    .populate("user")
+    .populate("author")
     .limit(20);
 
-  // res.json({ arrayDeTweets, user });
-  console.log(req.user.userId);
-
-  const user = await User.findById(req.user.userId).select("following");
   console.log("usuario " + user);
-  // const tweets = await Tweet.find({
-  //   user: { $in: [...user.following, req.user.userId] },
-  // })
-  //   .populate("user")
-  //   .sort({ createdAt: "desc" });
   console.log("tweets" + arrayDeTweets);
-  res.json(arrayDeTweets);
+  res.json({ arrayDeTweets, user });
 };
 module.exports = {
   sendToken,
