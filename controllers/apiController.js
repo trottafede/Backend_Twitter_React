@@ -39,7 +39,7 @@ const sendTweets = async (req, res) => {
   const user = req.user;
   console.log(user);
   const arrayDeTweets = await Tweet.find()
-    .sort({ createdAt: -1 })
+    .sort({ createdAt: "desc" })
     .populate("author")
     .limit(20);
 
