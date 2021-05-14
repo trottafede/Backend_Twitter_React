@@ -1,0 +1,29 @@
+body {
+  background-color: #e6ecf0;
+}
+
+#main_page {
+  min-height: 800px;
+}
+.registro {
+  padding: 40px;
+  margin: 40px auto 40px auto;
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.backgroundIMG {
+  background-image: url("/img/twitterbg.png");
+  width: auto;
+  height: auto;
+  min-height: 500px;
+  min-width: 500px;
+
+  background-size: auto;
+  background-repeat: no-repeat;
+}
