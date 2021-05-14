@@ -11,4 +11,6 @@ router.post("/create", apiController.newTweet);
 
 router.post("/createLike", apiController.newTweet);
 
+router.post("/like", apiController.createLike);
+
 module.exports = router;

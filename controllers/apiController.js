@@ -39,7 +39,7 @@ const sendTweets = async (req, res) => {
   const user = req.user;
   console.log(user);
   const arrayDeTweets = await Tweet.find()
-    .sort({ createdAt: "desc" })
+    .sort({ createdAt: -1 })
     .populate("author")
     .limit(20);
 
@@ -78,20 +78,22 @@ const newTweet = async (req, res) => {
 };
 
 const createLike = async (req, res) => {
+  console.log("Estoy acá");
+  console.log(req.body);
   try {
     //conseguir el tweet que el usuario hace like
     let tweet = await Tweet.findById(req.body.tweetId);
-
+    console.log(tweet);
     //al campo like [] agregarle id del usuario que hace click
-    if (tweet.likes.includes(req.body.user)) {
+    if (tweet.likes.includes(req.user.userId)) {
       console.log("este usuario está dentro de los likes");
-      const index = tweet.likes.indexOf(req.body.user);
+      const index = tweet.likes.indexOf(req.user.userId);
       if (index > -1) {
         tweet.likes.splice(index, 1);
       }
     } else {
       console.log("este usuario no está dentro de los likes de este tweet");
-      tweet.likes.push(req.body.user);
+      tweet.likes.push(req.user.userId);
     }
 
     await tweet.save();
