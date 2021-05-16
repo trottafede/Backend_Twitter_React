@@ -99,7 +99,7 @@ const newUser = async (req, res) => {
   const lastName = req.body.lastName;
   const userName = req.body.username;
   const email = req.body.email;
-  const image =
+  let image =
     "https://pm1.narvii.com/6796/e227b6ba84cdc3772b24da658fe3561471ea6a91v2_hq.jpg";
   let bio =
     "Nuevo usuario, por favor modifca tu perfil y que te diviertas :). HA bootcamp, 2021";
@@ -200,6 +200,12 @@ const getUserTweets = async (req, res) => {
   res.json(tweets);
 };
 
+const getUsers = async (req, res) => {
+  const usersToFollow = await User.find().sort({ createdAt: "asc" });
+
+  res.json(usersToFollow);
+};
+
 module.exports = {
   sendToken,
   sendTweets,
@@ -211,4 +217,5 @@ module.exports = {
   patchUser,
   getUserInfo,
   getUserTweets,
+  getUsers,
 };
