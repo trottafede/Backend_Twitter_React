@@ -160,6 +160,44 @@ const getUser = async (req, res) => {
   res.json(user);
 };
 
+const patchUser = async (req, res) => {
+  console.log(req.body);
+
+  await User.findByIdAndUpdate(
+    req.params.id,
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      image: req.body.image,
+      bio: req.body.bio,
+    },
+    { useFindAndModify: false },
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Updated User : ", docs);
+      }
+    }
+  );
+
+  res.status(200).json("patcheado con éxito");
+};
+
+const getUserInfo = async (req, res) => {
+  const user = await User.findOne({ _id: req.params.id });
+  res.json(user);
+};
+
+const getUserTweets = async (req, res) => {
+  const tweets = await Tweet.find({ author: req.params.id })
+    .populate("author")
+    .limit(20)
+    .sort({ createdAt: "desc" });
+  res.json(tweets);
+};
+
 module.exports = {
   sendToken,
   sendTweets,
@@ -168,4 +206,7 @@ module.exports = {
   newUser,
   userTweets,
   getUser,
+  patchUser,
+  getUserInfo,
+  getUserTweets,
 };

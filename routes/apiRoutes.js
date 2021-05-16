@@ -10,7 +10,11 @@ router.post("/user", apiController.newUser);
 router.get("/tweets", apiController.sendTweets);
 router.get("/userTweets", apiController.userTweets);
 
+router.patch("/user/:id", apiController.patchUser);
+
 router.get("/userInfo", apiController.getUser);
+router.get("/userInfo/:id", apiController.getUserInfo);
+router.get("/userTweets/:id", apiController.getUserTweets);
 
 router.post("/create", apiController.newTweet);
 
