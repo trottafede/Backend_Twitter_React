@@ -8,6 +8,7 @@ router.post("/user", apiController.newUser);
 
 // Private Routes
 router.get("/tweets", apiController.sendTweets);
+router.get("/userTweets", apiController.userTweets);
 
 router.post("/create", apiController.newTweet);
 

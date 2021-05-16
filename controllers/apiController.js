@@ -144,10 +144,22 @@ const newUser = async (req, res) => {
   });
 };
 
+const userTweets = async (req, res) => {
+  const tweets = await Tweet.find({ author: req.user.userId })
+    .populate("author")
+    .limit(20)
+    .sort({ createdAt: "desc" });
+
+  res.json(tweets);
+
+  // const usersToFollow = await User.find().sort({ createdAt: "asc" });
+};
+
 module.exports = {
   sendToken,
   sendTweets,
   newTweet,
   createLike,
   newUser,
+  userTweets,
 };
