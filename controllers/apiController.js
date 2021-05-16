@@ -23,10 +23,7 @@ const sendToken = async (req, res) => {
     });
   }
 
-  let token = jwt.sign(
-    { userId: userDB._id, userName: userDB.userName, email: userDB.email },
-    process.env.ACCESS_TOKEN_SECRET
-  );
+  let token = jwt.sign({ userDB }, process.env.ACCESS_TOKEN_SECRET);
 
   res.json({
     userId: userDB._id,
