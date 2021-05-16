@@ -155,6 +155,11 @@ const userTweets = async (req, res) => {
   // const usersToFollow = await User.find().sort({ createdAt: "asc" });
 };
 
+const getUser = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+  res.json(user);
+};
+
 module.exports = {
   sendToken,
   sendTweets,
@@ -162,4 +167,5 @@ module.exports = {
   createLike,
   newUser,
   userTweets,
+  getUser,
 };
