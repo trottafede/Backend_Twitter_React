@@ -143,6 +143,7 @@ const newUser = async (req, res) => {
           if (error) return console.log(error);
           console.log("\n User salvado: \n" + savvedNewUser);
         });
+        res.status(200).json("todo ok ñery");
 
         console.log("Usuario agregado exitosamente: ");
         console.log(newUser);
