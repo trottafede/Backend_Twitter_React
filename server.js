@@ -35,23 +35,16 @@ app.use(express.static(__dirname + "public"));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true })); // Para recibir formdata
 
-// passport.js
-// const passport = require("./middlewares/passport");
-// passport(app);
-
 var tokenAuth = require("express-jwt");
 app.use(
   tokenAuth({
     secret: process.env.ACCESS_TOKEN_SECRET,
     algorithms: ["HS256"],
   }).unless({
-    path: ["/tokens"],
+    path: ["/tokens", "/user"],
   })
 );
-//routes
-//Ejemplo
-// app.use(users);
-// app.use(tweets);
+
 app.use(apiRoutes);
 
 //Inicio Server

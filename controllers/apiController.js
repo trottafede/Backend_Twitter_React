@@ -98,7 +98,61 @@ const createLike = async (req, res) => {
 };
 
 const newUser = async (req, res) => {
-  console.log(req.body);
+  const bcrypt = require("bcryptjs");
+  var validator = require("email-validator");
+
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const userName = req.body.username;
+  const email = req.body.email;
+  // const image = faker.image.avatar();
+  // let bio = req.body.bio;
+  let password = req.body.password;
+
+  // bio = "mi bio";
+  // Falta validar usuario no repetido
+
+  bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.hash(password, salt, async function (err, hash) {
+      // Store hash in your password DB.
+      if (err) {
+        console.log("Error de algo" + err);
+      }
+      if (
+        validator.validate(email) &&
+        firstName.length >= 4 &&
+        lastName.length >= 4 &&
+        password.length >= 4 &&
+        userName.length >= 4
+      ) {
+        console.log(
+          "Todo válido y validado------------------------------------------------"
+        );
+
+        let newUser = new User({
+          firstName: firstName,
+          lastName: lastName,
+          userName: userName,
+          email: email,
+          // image: image,
+          // bio: bio,
+          password: hash,
+        });
+
+        newUser.save((error, savvedNewUser) => {
+          if (error) return console.log(error);
+          console.log("\n User salvado: \n" + savvedNewUser);
+        });
+
+        console.log("Usuario agregado exitosamente: ");
+        console.log(newUser);
+      } else {
+        console.log(
+          "Hay algo que no es válido------------------------------------------------"
+        );
+      }
+    });
+  });
 };
 
 module.exports = {
@@ -106,4 +160,5 @@ module.exports = {
   sendTweets,
   newTweet,
   createLike,
+  newUser,
 };
