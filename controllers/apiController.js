@@ -201,7 +201,7 @@ const getUserTweets = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const usersToFollow = await User.find().sort({ createdAt: "asc" });
+  const usersToFollow = await User.find().sort({ createdAt: "desc" });
 
   res.json(usersToFollow);
 };
