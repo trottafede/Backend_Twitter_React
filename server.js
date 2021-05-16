@@ -21,18 +21,12 @@ mongoose
   .catch((err) => console.log(err));
 
 //Importo rutas
-const tweets = require("./routes/tweets");
-const users = require("./routes/users");
 const apiRoutes = require("./routes/apiRoutes");
 
 //Settings
 app.set("port", process.env.PORT || 4500);
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
 
 //Middlewares
-app.use(express.static(__dirname + "public"));
-app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true })); // Para recibir formdata
 
 var tokenAuth = require("express-jwt");

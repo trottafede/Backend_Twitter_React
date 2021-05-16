@@ -37,7 +37,6 @@ const sendToken = async (req, res) => {
 
 const sendTweets = async (req, res) => {
   const user = req.user;
-  console.log(user);
   const arrayDeTweets = await Tweet.find()
     .sort({ createdAt: -1 })
     .populate("author")
@@ -69,21 +68,16 @@ const newTweet = async (req, res) => {
 };
 
 const createLike = async (req, res) => {
-  console.log("Estoy acá");
-  console.log(req.body);
   try {
     //conseguir el tweet que el usuario hace like
     let tweet = await Tweet.findById(req.body.tweetId);
-    console.log(tweet);
     //al campo like [] agregarle id del usuario que hace click
     if (tweet.likes.includes(req.user.userId)) {
-      console.log("este usuario está dentro de los likes");
       const index = tweet.likes.indexOf(req.user.userId);
       if (index > -1) {
         tweet.likes.splice(index, 1);
       }
     } else {
-      console.log("este usuario no está dentro de los likes de este tweet");
       tweet.likes.push(req.user.userId);
     }
 
@@ -141,16 +135,10 @@ const newUser = async (req, res) => {
 
         newUser.save((error, savvedNewUser) => {
           if (error) return console.log(error);
-          console.log("\n User salvado: \n" + savvedNewUser);
         });
-        res.status(200).json("todo ok ñery");
-
-        console.log("Usuario agregado exitosamente: ");
-        console.log(newUser);
+        res.status(201).json("Se guardó");
       } else {
-        console.log(
-          "Hay algo que no es válido------------------------------------------------"
-        );
+        res.status(406).json("No se pudo guardar");
       }
     });
   });
