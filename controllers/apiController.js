@@ -47,15 +47,6 @@ const sendTweets = async (req, res) => {
 };
 
 const newTweet = async (req, res) => {
-  // console.log("texto es: " + req.body.text + " de: ");
-  // console.log(req.user);
-  // const { text } = req.body;
-
-  // const tweet = new Tweet({ text, author: req.body.user });
-  // console.log(req.body);
-  // await tweet.save(); //try y catch
-  // res.json(tweet);
-
   const { text } = req.body;
   if (text.length > 2 && text.length < 141) {
     const tweet = await Tweet.create({ text, author: req.user.userId });
@@ -104,6 +95,10 @@ const createLike = async (req, res) => {
   }
 
   return res.json("like successful");
+};
+
+const newUser = async (req, res) => {
+  console.log(req.body);
 };
 
 module.exports = {
